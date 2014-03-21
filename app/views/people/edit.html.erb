@@ -1,0 +1,24 @@
+<% if @people.errors.any? %>
+	<h2> The following errors prevented your person from saving: </h2>
+<ul>
+	<% @people.errors.full_messages.each do |msg| %>
+		<li> <%= msg %> </li>
+	<% end %>
+</ul>
+<% end %>
+
+<h1> Edit an existing person: </h1>
+<%= form_for(@people) do |f| %>
+	<fieldset>
+		<legend>Person</legend>
+	<div>
+		<%= f.label :name %>
+		<%= f.text_field :name %>
+	</div>
+	<div>
+		<%= f.label :phone %>
+		<%= f.text_field :phone %>
+	</div>
+	</fieldset>
+	<%= f.submit %>
+<% end %>

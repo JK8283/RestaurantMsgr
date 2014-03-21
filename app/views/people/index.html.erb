@@ -1,0 +1,19 @@
+<h1> All the people </h1>
+
+<%= link_to "Add a new person", new_person_path %>
+
+<ul>
+	<% @people.each do |person| %>
+		<li> <%= person.name %> </li>
+		<li> <%= person.phone %> </li>
+		<li> <%= link_to "Edit", edit_person_path(person.id) %> </li>
+		<li> <%= link_to "Delete", person_path(person.id), :method => :delete %> </li> 
+		<li> 
+			 <%= form_tag person_messages_path(person.id), :method => :post do %> 
+			 <%= text_area_tag :body, "", placeholder: "Type your text here" %>
+			 <%= submit_tag "Send Message" %>
+			 <% end %>
+			 <br>
+		</li>
+	<% end %>
+</ul>
