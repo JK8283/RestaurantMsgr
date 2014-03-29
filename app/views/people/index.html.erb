@@ -1,19 +1,57 @@
-<h1> All the people </h1>
+<h1> RestaurantMsgr </h1>
 
-<%= link_to "Add a new person", new_person_path %>
+<h4> <%= "Current time: #{Time.now.strftime "%m/%d, %I:%M %P"}" %> </h4>
 
-<ul>
-	<% @people.each do |person| %>
-		<li> <%= person.name %> </li>
-		<li> <%= person.phone %> </li>
-		<li> <%= link_to "Edit", edit_person_path(person.id) %> </li>
-		<li> <%= link_to "Delete", person_path(person.id), :method => :delete %> </li> 
-		<li> 
-			 <%= form_tag person_messages_path(person.id), :method => :post do %> 
-			 <%= text_area_tag :body, "", placeholder: "Type your text here" %>
-			 <%= submit_tag "Send Message" %>
-			 <% end %>
-			 <br>
+<%= link_to "+ New customer", new_person_path %>
+
+<!-- Quick list of waiting customers -->
+<h3> Wait List </h3>
+	<% sorted_people = @people.sort_by {|people| people[:seating_time]} %>
+	<ol>
+	<% sorted_people.each do |sperson| %>
+		<li>
+			<% if (DateTime.strptime(sperson.seating_time, "%I:%M %P (%m/%d)").to_time - (Time.now-7*3600)) < 0 %>
+				<b><font color = "red" > <%= "#{sperson.name} | Party of #{sperson.partysize} | Seating Time: #{sperson.seating_time} | SEATING OVERDUE" %> </font></b>
+					<!-- links below: -->
+				<%= link_to "Edit", edit_person_path(sperson.id) %> |
+				<%= link_to "Delete", person_path(sperson.id), :method => :delete %> 
+			<% else %>
+				<%= "#{sperson.name} | Party of #{sperson.partysize} | Seating Time: #{sperson.seating_time}" %>
+					<!-- links below: -->
+				<%= link_to "Edit", edit_person_path(sperson.id) %> |
+				<%= link_to "Delete", person_path(sperson.id), :method => :delete %> 
+			<% end %>
 		</li>
 	<% end %>
-</ul>
+	</ol>
+
+
+<!-- Each customer's contact info, etc -->
+<h3> Customer Details </h3>
+<ol>
+	<% sorted_people.each do |person| %>
+		<li> 
+		<%= "Name: #{person.name}" %> <br>
+		<%= "Phone #: #{person.phone}" %> <br>
+		<%= "Party Size: #{person.partysize}" %> <br>
+		<%= "Given Wait Time: #{person.waitminutes} minutes" %> <br>
+
+		<%= "Implied Seating Time: " + (person.seating_time.in_time_zone("Pacific Time (US & Canada)").strftime "%I:%M %P")  %> </li>
+		<!-- links below: -->
+		<%= link_to "Edit", edit_person_path(person.id) %> |
+		<%= link_to "Delete", person_path(person.id), :method => :delete %> 
+		
+		<!-- Text message section below: -->
+		<%= form_tag person_messages_path(person.id), :method => :post do %>
+		<% tableready = (DateTime.strptime(person.seating_time, "%I:%M %P (%m/%d)").to_time - (Time.now-7*3600))/60%>
+			<% if tableready > 0 %>
+				<%= text_area_tag :body, "Your table will be ready in #{tableready.round} minutes.", placeholder: "Type your text here" %><br>
+			<% else %>
+				<%= text_area_tag :body, "Your table is now ready!", placeholder: "Type your text here" %><br>
+			<% end %>
+		<%= submit_tag "Send Message" %>
+		<% end %>
+		<br>
+		
+	<% end %>
+</ol>

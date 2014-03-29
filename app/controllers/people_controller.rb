@@ -1,5 +1,7 @@
 class PeopleController < ApplicationController
 
+before_action :authenticate_user!, only: [:new, :create]
+
 	def index
 		@people = Person.all
 	end
@@ -13,7 +15,7 @@ class PeopleController < ApplicationController
 	end
 
 	def create
-		safe_person_params = params.require(:person).permit(:name, :phone)
+		safe_person_params = params.require(:person).permit(:name, :phone, :partysize, :waitminutes)
 		@people = Person.new(safe_person_params)
 		if @people.save
 			redirect_to root_path
@@ -27,7 +29,7 @@ class PeopleController < ApplicationController
 	end
 
 	def update
-		safe_person_params = params.require(:person).permit(:name, :phone)
+		safe_person_params = params.require(:person).permit(:name, :phone, :partysize, :waitminutes)
 		@people = Person.find(params[:id])
 		if @people.update(safe_person_params)
 			redirect_to root_path

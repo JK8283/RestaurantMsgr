@@ -7,7 +7,10 @@
 </ul>
 <% end %>
 
-<h1> Edit an existing person: </h1>
+<li> <%= "Current time: #{Time.now.strftime "%I:%M %P (%m/%d)"}" %> </li>
+<li> <%= "Current estimated seating time: #{@people.seating_time}" %> </li>
+
+<h1> Edit an existing customer: </h1>
 <%= form_for(@people) do |f| %>
 	<fieldset>
 		<legend>Person</legend>
@@ -19,6 +22,15 @@
 		<%= f.label :phone %>
 		<%= f.text_field :phone %>
 	</div>
+	<div>
+		<%= f.label :partysize %>
+		<%= f.text_field :partysize %>
+	</div>
+	<div>
+		<%= f.label :waitminutes %>
+		<%= f.text_field :waitminutes %>
+	</div>
 	</fieldset>
 	<%= f.submit %>
+
 <% end %>

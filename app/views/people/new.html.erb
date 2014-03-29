@@ -7,7 +7,9 @@
 </ul>
 <% end %>
 
-<h1> Add a new person: </h1>
+<li> <%= "Current time: #{Time.now.strftime "%I:%M %P (%m/%d)"}" %> </li>
+
+<h1> Add a new customer: </h1>
 <%= form_for(@people) do |f| %>
 	<fieldset>
 		<legend>Person</legend>
@@ -18,6 +20,14 @@
 	<div>
 		<%= f.label :phone %>
 		<%= f.text_field :phone %>
+	</div>
+	<div>
+		<%= f.label :partysize %>
+		<%= f.text_field :partysize %>
+	</div>
+	<div>
+		<%= f.label :waitminutes %>
+		<%= f.text_field :waitminutes %>
 	</div>
 	</fieldset>
 	<%= f.submit %>
