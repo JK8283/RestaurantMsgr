@@ -1,0 +1,22 @@
+<%= form_for(@people) do |f| %>
+	<fieldset>
+		<legend>Person</legend>
+	<div>
+		<%= f.label :name %>
+		<%= f.text_field :name %>
+	</div>
+	<div>
+		<%= f.label :phone %>
+		<%= f.text_field :phone %>
+	</div>
+	<div>
+		<%= f.label "Party Size" %>
+		<%= f.text_field :partysize %>
+	</div>
+	<div>
+		<%= f.label "Wait Time (mins)" %>
+		<%= f.text_field :waitminutes %>
+	</div>
+	</fieldset>
+	<%= f.submit %>
+<% end %>

@@ -1,6 +1,8 @@
 class Person < ActiveRecord::Base
 	validates :name, presence: true
-	validates :phone, presence: true, length: {minimum: 10,   }
+	validates :phone, presence: true, length: {minimum: 10, maximum: 10   }
+	validates :partysize, presence: true, numericality: {only_integer:true, :greater_than => 0, :less_than_or_equal_to => 12 }
+	validates :waitminutes, presence: true, numericality: {only_integer:true, :greater_than_or_equal_to => 0, :less_than_or_equal_to => 240  }
 
 	before_save :calculate_seating_time
 
