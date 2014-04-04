@@ -1,6 +1,6 @@
 <h1> RestaurantMsgr </h1>
 
-<h4> <%= "Current time: #{Time.now.strftime "%m/%d, %I:%M %P"}" %> </h4>
+<h4> <%= "Current time: #{Time.now.strftime "%I:%M %P (%m/%d)"}" %> </h4>
 
 <h5> <%= link_to "+ New customer", new_person_path %> </h5>
 
@@ -42,8 +42,8 @@
 				<%= "Name: #{person.name}" %> <br>
 				<%= "Phone #: #{person.phone}" %> <br>
 				<%= "Party Size: #{person.partysize}" %> <br>
+				<%= "Time Arrived: " + (person.created_at.in_time_zone("Pacific Time (US & Canada)").strftime "%I:%M %P")  %> <br>
 				<%= "Given Wait Time: #{person.waitminutes} minutes" %> <br>
-
 				<%= "Estimated Seating Time: " + (person.seating_time.in_time_zone("Pacific Time (US & Canada)").strftime "%I:%M %P")  %> <br>
 				<!-- links below: -->
 				<%= link_to "Edit", edit_person_path(person.id) %> |
@@ -65,8 +65,8 @@
 			<%= "Name: #{person.name}" %> <br>
 			<%= "Phone #: #{person.phone}" %> <br>
 			<%= "Party Size: #{person.partysize}" %> <br>
+			<%= "Time Arrived: " + (person.created_at.in_time_zone("Pacific Time (US & Canada)").strftime "%I:%M %P")  %> <br>
 			<%= "Given Wait Time: #{person.waitminutes} minutes" %> <br>
-
 			<%= "Estimated Seating Time: " + (person.seating_time.in_time_zone("Pacific Time (US & Canada)").strftime "%I:%M %P")  %> <br>
 			<!-- links below: -->
 			<%= link_to "Edit", edit_person_path(person.id) %> |

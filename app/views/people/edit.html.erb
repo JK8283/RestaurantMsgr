@@ -8,6 +8,7 @@
 <% end %>
 
 <li> <%= "Current time: #{Time.now.strftime "%I:%M %P (%m/%d)"}" %> </li>
+<li> <%= "Time Arrived: " + (@people.created_at.in_time_zone("Pacific Time (US & Canada)").strftime "%I:%M %P (%m/%d)")  %> <br>
 <li> <%= "Current estimated seating time: #{@people.seating_time}" %> </li>
 
 <h1> Edit an existing customer: </h1>
